@@ -24,9 +24,18 @@
           flavor = "tap-preferred";
           bindings = <&kp>, <&kp>;
       };
+      // Momentary layer or key press
+      mo_kp: mo_kp {
+          compatible = "zmk,behavior-hold-tap";
+          label = "mo_kp";
+          #binding-cells = <2>;
+          tapping-term-ms = <200>;
+          quick_tap_ms = <175>;
+          flavor = "tap-preferred";
+          bindings = <&mo>, <&kp>;
+      };
     };
     macros {
-      // NOTE: potentially can be switched to 'mod-tag'
       ZMK_MACRO(tmux_prev,
           wait-ms = <30>;
           tap-ms = <40>;
@@ -36,7 +45,6 @@
             , <&macro_release &kp LALT>
             ;
       )
-      // NOTE: potentially can be switched to 'mod-tag'
       ZMK_MACRO(tmux_next,
           wait-ms = <30>;
           tap-ms = <40>;
@@ -46,25 +54,45 @@
             , <&macro_release &kp LALT>
             ;
       )
+      ZMK_MACRO(tmux_split_v,
+          wait-ms = <30>;
+          tap-ms = <40>;
+          bindings
+            = <&macro_press &kp LCTRL>
+            , <&macro_tap &kp B>
+            , <&macro_release &kp LCTRL>
+            , <&macro_tap &kp BACKSLASH>
+            ;
+      )
+      ZMK_MACRO(tmux_split_h,
+          wait-ms = <30>;
+          tap-ms = <40>;
+          bindings
+            = <&macro_press &kp LCTRL>
+            , <&macro_tap &kp B>
+            , <&macro_release &kp LCTRL>
+            , <&macro_tap &kp MINUS>
+            ;
+      )
     };
 
   // Home row mods
-  #define _A_SFT &hm LSHFT A        // Pinky finger:  Shift
-  #define _O_SFT &hm RSHFT O        // Pinky finger:  Shift
-  #define _R_OPT &hm LALT  R        // Ring finger:   Option
-  #define _S_CMD &hm LGUI  S        // Middle finger: Command
-  #define _T_NAV &hm &mo NAVIGATION // Index finger:  Switch to navigation layer
+  #define _A_SFT &hm LSHFT A         // Pinky finger:  Shift
+  #define _O_SFT &hm RSHFT O         // Pinky finger:  Shift
+  #define _R_OPT &hm LALT  R         // Ring finger:   Option
+  #define _S_CMD &hm LGUI  S         // Middle finger: Command
+  #define _T_NAV &mo_kp NAVIGATION T // Index finger:  Switch to navigation layer
 
   keymap {
     compatible = "zmk,keymap";
 
     default_layer {
       bindings = <
-        &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4    &kp N5 &tog 1                                                                &mo SETTINGS &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
-        &kp TAB   &kp Q     &kp W    &kp F    &kp P     &kp G  &none                                                                 &none        &kp J  &kp L  &kp U     &kp Y    &kp SEMI &kp BSLH
-        &kp ESC   _A_SFT    _R_OPT   _S_CMD   _T_NAV    &kp D  &none                 &kp LGUI &kp LALT &kp LGUI  &kp RCTRL           &none        &kp H  &kp N  &kp E     &kp I    _O_SFT   &kp SQT
-        &kp LSHFT &kp Z     &kp X    &kp C    &kp V     &kp B                                 &kp HOME &kp PG_UP                                  &kp K  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
-        &mo FUNC  &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT               &mt LCTRL BSPC &kp DEL  &kp END  &kp PG_DN &kp ENTER &kp SPACE                     &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo FUNC
+        &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4    &kp N5 &tog 1                                                                 &mo SETTINGS &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
+        &kp TAB   &kp Q     &kp W    &kp F    &kp P     &kp G  &none                                                                  &none        &kp J  &kp L  &kp U     &kp Y    &kp SEMI &kp BSLH
+        &kp ESC   _A_SFT    _R_OPT   _S_CMD   _T_NAV    &kp D  &none           &kp LGUI  &kp LALT       &kp LGUI  &kp RCTRL           &none        &kp H  &kp N  &kp E     &kp I    _O_SFT   &kp SQT
+        &kp LSHFT &kp Z     &kp X    &kp C    &kp V     &kp B                            &tmux_split_v  &kp PG_UP                                  &kp K  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
+        &mo FUNC  &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT               &kp BSPC &kp LCTRL &tmux_split_h  &kp PG_DN &kp ENTER &kp SPACE                     &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo FUNC
       >;
     };
     keypad {
@@ -89,9 +117,9 @@
       bindings = <
         &none &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &none                                                                     &trans                 &none        &none        &none        &none &none &none
         &none &none        &none        &none        &none        &none        &bootloader                                                               &bootloader            &none        &none        &none        &none &none &none
-        &none &none        &none        &none        &none        &none        &none                   &none &none &bt BT_CLR &none                      &rgb_ug RGB_MEFS_CMD 5 &none        &none        &none        &none &none &none
-        &none &none        &none        &none        &none        &none                                      &none &none                                                        &none        &none        &none        &none &none &none
-        &none &none        &none        &none        &none                                       &none &none &none &none      &bl BL_TOG &rgb_ug RGB_TOG                                     &bl BL_INC   &bl BL_DEC   &none &none &none
+        &none &none        &none        &none        &none        &none        &none                   &none &none &bt BT_CLR &none                      &rgb_ug RGB_MEFS_CMD 5 &none        &none        &none        &none &none &out OUT_USB
+        &none &none        &none        &none        &none        &none                                      &none &none                                                        &none        &none        &none        &none &none &out OUT_BLE
+        &none &none        &none        &none        &none                                       &none &none &none &none      &bl BL_TOG &rgb_ug RGB_TOG                                     &bl BL_INC   &bl BL_DEC   &none &none &out OUT_TOG
       >;
     };
     qwerty_layer {
@@ -105,11 +133,11 @@
     };
     navigation_layer {
       bindings = <
-        &none &none  &none  &none  &none  &none &none                                       &none &none    &none      &none      &none     &none &none
-        &none &none  &none  &none  &none  &none &none                                       &none &none    &none      &none      &none     &none &none
-        &none &trans &trans &trans &trans &none &none        &trans &none &none &none       &none &kp LEFT &kp DOWN   &kp UP     &kp RIGHT &none &none
-        &none &none  &none  &none  &none  &none                     &none &none                   &none    &tmux_prev &tmux_next &none     &none &none
-        &none &none  &none  &none  &none              &trans &none  &none &none &none &none                &none      &none      &none     &none &none
+        &none &none  &none  &none  &none  &none &none                                       &none &none    &none      &none  &none     &none      &none
+        &none &none  &none  &none  &none  &none &none                                       &none &none    &none      &none  &none     &none      &none
+        &none &trans &trans &trans &trans &none &none        &trans &none &none &none       &none &kp LEFT &kp DOWN   &kp UP &kp RIGHT &none      &none
+        &none &none  &none  &none  &none  &none                     &none &none                   &none    &tmux_prev &none  &none     &tmux_next &none
+        &none &none  &none  &none  &none              &trans &none  &none &none &none &none                &none      &none  &none     &none      &none
       >;
     };
   };
