@@ -9,6 +9,7 @@
 #define SETTINGS   1
 #define QWERTY     2
 #define NAVIGATION 3
+#define SYMBOLS    4
 
 / {
     behaviors {
@@ -104,11 +105,11 @@
 
     default_layer {
       bindings = <
-        &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4    &kp N5 &none                                                                 &mo SETTINGS &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
-        &kp TAB   &kp Q     &kp W    _F_CMD   &kp P     &kp G  &none                                                                 &none        &kp J  &kp L  &kp U     &kp Y    &kp SEMI &kp BSLH
-        &kp ESC   _A_SFT    _R_OPT   _S_CMD   _T_NAV    &kp D  &none          &kp LGUI  &kp LALT      &kp LGUI   &kp RCTRL           &none        &kp H  &kp N  &kp E     &kp I    _O_SFT   &kp SQT
-        &kp LSHFT &kp Z     _X_CMD   _C_CMD   _V_CMD    _B_CMD                          &tmux_split_v &kp PG_UP                                   &kp K  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
-        &none     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT              &kp BSPC &kp LCTRL &tmux_split_h &tmux_zoom &kp ENTER &kp SPACE                     &kp UP &kp DOWN  &kp LBKT &kp RBKT &none
+        &none           &kp N1    &kp N2   &kp N3   &kp N4    &kp N5 &none                                                                 &mo SETTINGS &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp EQUAL
+        &kp TAB         &kp Q     &kp W    _F_CMD   &kp P     &kp G  &none                                                                 &none        &kp J  &kp L  &kp U     &kp Y    &kp SEMI &kp MINUS
+        &kp ESC         _A_SFT    _R_OPT   _S_CMD   _T_NAV    &kp D  &none          &kp LGUI  &kp LALT      &kp DELETE &kp RCTRL           &none        &kp H  &kp N  &kp E     &kp I    _O_SFT   &kp SINGLE_QUOTE
+        &lt SYMBOLS ESC &kp Z     _X_CMD   _C_CMD   _V_CMD    _B_CMD                          &tmux_split_v &kp PG_UP                                   &kp K  &kp M  &kp COMMA &kp DOT  &kp FSLH &mo SYMBOLS
+        &none           &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT              &kp BSPC &kp LCTRL &tmux_split_h &tmux_zoom &kp ENTER &kp SPACE                     &kp UP &kp DOWN  &kp LBKT &kp RBKT &none
       >;
     };
     mod {
@@ -136,6 +137,15 @@
         &none &trans &trans &trans &trans &none &none        &trans &none &none &none       &none &kp LEFT &kp DOWN   &kp UP &kp RIGHT &none      &none
         &none &none  &none  &none  &none  &none                     &none &none                   &none    &tmux_prev &none  &none     &tmux_next &none
         &none &none  &none  &none  &none              &trans &none  &none &none &none &none                &none      &none  &none     &none      &none
+      >;
+    };
+    symbols_layer {
+      bindings = <
+        &none &none           &none             &none            &none             &none       &none                                     &none &none     &none          &none         &none                &none                 &none
+        &none &kp EXCLAMATION &kp AT_SIGN       &kp HASH         &kp DOLLAR        &kp PERCENT &none                                     &none &kp PLUS  &kp AMPERSAND  &kp ASTERISK  &none                &kp COLON             &none
+        &none &kp GRAVE       &kp DOUBLE_QUOTES &kp LEFT_BRACE   &kp RIGHT_BRACE   &none       &none       &none &none &none &none       &none &kp CARET &kp UNDERSCORE &kp MINUS     &kp LEFT_PARENTHESIS &kp RIGHT_PARENTHESIS &none
+        &none &kp PIPE        &kp BACKSLASH     &kp LEFT_BRACKET &kp RIGHT_BRACKET &kp TILDE                     &none &none                   &none     &kp EQUAL      &kp LESS_THAN &kp GREATER_THAN     &kp QUESTION          &none
+        &none &none           &none             &none            &none                               &none &none &none &none &none &none                 &none          &none         &none                &none                 &none
       >;
     };
   };
