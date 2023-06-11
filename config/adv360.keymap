@@ -100,12 +100,23 @@
   #define _V_CMD &mt LG(V) V
   #define _B_CMD &mt LG(B) B
 
+  #define _1_F1  &mt F1  N1
+  #define _2_F2  &mt F2  N2
+  #define _3_F3  &mt F3  N3
+  #define _4_F4  &mt F4  N4
+  #define _5_F5  &mt F5  N5
+  #define _6_F6  &mt F6  N6
+  #define _7_F7  &mt F7  N7
+  #define _8_F8  &mt F8  N8
+  #define _9_F9  &mt F9  N9
+  #define _0_F10 &mt F10 N0
+
   keymap {
     compatible = "zmk,keymap";
 
     default_layer {
       bindings = <
-        &none           &kp N1    &kp N2   &kp N3   &kp N4    &kp N5 &none                                                                 &mo SETTINGS &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp EQUAL
+        &kp F12         _1_F1     _2_F2    _3_F3    _4_F4     _5_F5  &none                                                                 &mo SETTINGS _6_F6  _7_F7  _8_F8     _9_F9    _0_F10   &mt F11 EQUAL
         &kp TAB         &kp Q     &kp W    _F_CMD   &kp P     &kp G  &none                                                                 &none        &kp J  &kp L  &kp U     &kp Y    &kp SEMI &kp MINUS
         &kp ESC         _A_SFT    _R_OPT   _S_CMD   _T_NAV    &kp D  &none          &kp LGUI  &kp LALT      &kp DELETE &kp RCTRL           &none        &kp H  &kp N  &kp E     &kp I    _O_SFT   &kp SINGLE_QUOTE
         &lt SYMBOLS ESC &kp Z     _X_CMD   _C_CMD   _V_CMD    _B_CMD                          &tmux_split_v &kp PG_UP                                   &kp K  &kp M  &kp COMMA &kp DOT  &kp FSLH &mo SYMBOLS
