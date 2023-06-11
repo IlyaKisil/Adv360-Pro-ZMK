@@ -24,7 +24,7 @@
           flavor = "tap-preferred";
           bindings = <&kp>, <&kp>;
       };
-      // Momentary layer or key press
+      // Momentary layer or key press. Essentially equivalent to the Layer-Tap, i.e. &lt
       mo_kp: mo_kp {
           compatible = "zmk,behavior-hold-tap";
           label = "mo_kp";
@@ -81,18 +81,25 @@
   #define _O_SFT &hm RSHFT O         // Pinky finger:  Shift
   #define _R_OPT &hm LALT  R         // Ring finger:   Option
   #define _S_CMD &hm LGUI  S         // Middle finger: Command
-  #define _T_NAV &mo_kp NAVIGATION T // Index finger:  Switch to navigation layer
+  // #define _T_NAV &mo_kp NAVIGATION T // Index finger:  Switch to navigation layer
+  #define _T_NAV &lt NAVIGATION T // Index finger:  Switch to navigation layer
+
+  #define _F_CMD &mt LG(F) F
+  #define _X_CMD &mt LG(X) X
+  #define _C_CMD &mt LG(C) C
+  #define _V_CMD &mt LG(V) V
+  #define _B_CMD &mt LG(B) B
 
   keymap {
     compatible = "zmk,keymap";
 
     default_layer {
       bindings = <
-        &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4    &kp N5 &tog 1                                                                 &mo SETTINGS &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
-        &kp TAB   &kp Q     &kp W    &kp F    &kp P     &kp G  &none                                                                  &none        &kp J  &kp L  &kp U     &kp Y    &kp SEMI &kp BSLH
-        &kp ESC   _A_SFT    _R_OPT   _S_CMD   _T_NAV    &kp D  &none           &kp LGUI  &kp LALT       &kp LGUI  &kp RCTRL           &none        &kp H  &kp N  &kp E     &kp I    _O_SFT   &kp SQT
-        &kp LSHFT &kp Z     &kp X    &kp C    &kp V     &kp B                            &tmux_split_v  &kp PG_UP                                  &kp K  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
-        &mo FUNC  &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT               &kp BSPC &kp LCTRL &tmux_split_h  &kp PG_DN &kp ENTER &kp SPACE                     &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo FUNC
+        &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4    &kp N5 &tog 1                                                                &mo SETTINGS &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
+        &kp TAB   &kp Q     &kp W    _F_CMD   &kp P     &kp G  &none                                                                 &none        &kp J  &kp L  &kp U     &kp Y    &kp SEMI &kp BSLH
+        &kp ESC   _A_SFT    _R_OPT   _S_CMD   _T_NAV    &kp D  &none           &kp LGUI  &kp LALT      &kp LGUI  &kp RCTRL           &none        &kp H  &kp N  &kp E     &kp I    _O_SFT   &kp SQT
+        &kp LSHFT &kp Z     _X_CMD   _C_CMD   _V_CMD    _B_CMD                           &tmux_split_v &kp PG_UP                                  &kp K  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
+        &mo FUNC  &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT               &kp BSPC &kp LCTRL &tmux_split_h &kp PG_DN &kp ENTER &kp SPACE                     &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo FUNC
       >;
     };
     keypad {
