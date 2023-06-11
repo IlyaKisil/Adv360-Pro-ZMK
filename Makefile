@@ -1,5 +1,5 @@
 DOCKER := $(shell { command -v podman || command -v docker; })
-TIMESTAMP := $(shell date -u +"%Y%m%d%H%M%S")
+TIMESTAMP := $(shell date -u +"%Y-%m-%dT%H:%M:%S")
 detected_OS := $(shell uname)  # Classify UNIX OS
 ifeq ($(strip $(detected_OS)),Darwin) #We only care if it's OS X
 SELINUX1 :=
@@ -19,6 +19,21 @@ all:
 		-e TIMESTAMP=$(TIMESTAMP) \
 		zmk
 
+left:
+	$(DOCKER) build --tag zmk --file Dockerfile .
+	$(DOCKER) run --rm -it --name zmk \
+		-v $(PWD)/firmware:/app/firmware$(SELINUX1) \
+		-v $(PWD)/config:/app/config:ro$(SELINUX2) \
+		-e TIMESTAMP=$(TIMESTAMP) \
+		zmk
+right:
+	$(DOCKER) build --tag zmk --file Dockerfile .
+	$(DOCKER) run --rm -it --name zmk \
+		-v $(PWD)/firmware:/app/firmware$(SELINUX1) \
+		-v $(PWD)/config:/app/config:ro$(SELINUX2) \
+		-e TIMESTAMP=$(TIMESTAMP) \
+		zmk
+
 clean:
 	rm -f firmware/*.uf2
-	$(DOCKER) image rm zmk docker.io/zmkfirmware/zmk-build-arm:stable
+	# $(DOCKER) image rm zmk docker.io/zmkfirmware/zmk-build-arm:stable

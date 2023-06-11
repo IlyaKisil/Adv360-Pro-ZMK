@@ -1,0 +1,19 @@
+change_me_layer_name {
+  bindings = <
+    &trans &trans &trans &trans &trans &trans &trans                                           &trans &trans &trans &trans &trans &trans &trans
+    &trans &trans &trans &trans &trans &trans &trans                                           &trans &trans &trans &trans &trans &trans &trans
+    &trans &trans &trans &trans &trans &trans &trans        &trans &trans &trans &trans        &trans &trans &trans &trans &trans &trans &trans
+    &trans &trans &trans &trans &trans &trans                      &trans &trans                      &trans &trans &trans &trans &trans &trans
+    &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans
+  >;
+};
+
+change_me_layer_name {
+  bindings = <
+    &none &none &none &none &none &none &none                                     &none &none &none &none &none &none &none
+    &none &none &none &none &none &none &none                                     &none &none &none &none &none &none &none
+    &none &none &none &none &none &none &none       &none &none &none &none       &none &none &none &none &none &none &none
+    &none &none &none &none &none &none                   &none &none                   &none &none &none &none &none &none
+    &none &none &none &none &none             &none &none &none &none &none &none             &none &none &none &none &none
+  >;
+};
