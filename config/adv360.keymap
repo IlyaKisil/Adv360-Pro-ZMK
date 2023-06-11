@@ -73,6 +73,16 @@
             , <&macro_tap &kp MINUS>
             ;
       )
+      ZMK_MACRO(tmux_zoom,
+          wait-ms = <30>;
+          tap-ms = <40>;
+          bindings
+            = <&macro_press &kp LCTRL>
+            , <&macro_tap &kp B>
+            , <&macro_release &kp LCTRL>
+            , <&macro_tap &kp Z>
+            ;
+      )
     };
 
   // Home row mods
@@ -94,11 +104,11 @@
 
     default_layer {
       bindings = <
-        &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4    &kp N5 &tog 1                                                                &mo SETTINGS &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
+        &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4    &kp N5 &none                                                                 &mo SETTINGS &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
         &kp TAB   &kp Q     &kp W    _F_CMD   &kp P     &kp G  &none                                                                 &none        &kp J  &kp L  &kp U     &kp Y    &kp SEMI &kp BSLH
-        &kp ESC   _A_SFT    _R_OPT   _S_CMD   _T_NAV    &kp D  &none           &kp LGUI  &kp LALT      &kp LGUI  &kp RCTRL           &none        &kp H  &kp N  &kp E     &kp I    _O_SFT   &kp SQT
-        &kp LSHFT &kp Z     _X_CMD   _C_CMD   _V_CMD    _B_CMD                           &tmux_split_v &kp PG_UP                                  &kp K  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
-        &none     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT               &kp BSPC &kp LCTRL &tmux_split_h &kp PG_DN &kp ENTER &kp SPACE                     &kp UP &kp DOWN  &kp LBKT &kp RBKT &none
+        &kp ESC   _A_SFT    _R_OPT   _S_CMD   _T_NAV    &kp D  &none          &kp LGUI  &kp LALT      &kp LGUI   &kp RCTRL           &none        &kp H  &kp N  &kp E     &kp I    _O_SFT   &kp SQT
+        &kp LSHFT &kp Z     _X_CMD   _C_CMD   _V_CMD    _B_CMD                          &tmux_split_v &kp PG_UP                                   &kp K  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
+        &none     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT              &kp BSPC &kp LCTRL &tmux_split_h &tmux_zoom &kp ENTER &kp SPACE                     &kp UP &kp DOWN  &kp LBKT &kp RBKT &none
       >;
     };
     mod {
@@ -112,11 +122,11 @@
     };
     qwerty_layer {
       bindings = <
-        &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4    &kp N5 &tog 1                                                           &mo SETTINGS &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
-        &kp TAB   &kp Q     &kp W    &kp E    &kp R     &kp T  &none                                                            &none        &kp Y  &kp U  &kp I     &kp O    &kp P    &kp BSLH
-        &kp ESC   &kp A     &kp S    &kp D    &kp F     &kp G  &none           &kp LCTRL &kp LALT &kp LGUI  &kp RCTRL           &none        &kp H  &kp J  &kp K     &kp L    &kp SEMI &kp SQT
-        &kp LSHFT &kp Z     &kp X    &kp C    &kp V     &kp B                            &kp HOME &kp PG_UP                                  &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
-        &none     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT               &kp BSPC &kp DEL   &kp END  &kp PG_DN &kp ENTER &kp SPACE                     &kp UP &kp DOWN  &kp LBKT &kp RBKT &none
+        &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4    &kp N5 &none                                                           &mo SETTINGS &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
+        &kp TAB   &kp Q     &kp W    &kp E    &kp R     &kp T  &none                                                           &none        &kp Y  &kp U  &kp I     &kp O    &kp P    &kp BSLH
+        &kp ESC   &kp A     &kp S    &kp D    &kp F     &kp G  &none          &kp LCTRL &kp LALT &kp LGUI  &kp RCTRL           &none        &kp H  &kp J  &kp K     &kp L    &kp SEMI &kp SQT
+        &kp LSHFT &kp Z     &kp X    &kp C    &kp V     &kp B                           &kp HOME &kp PG_UP                                  &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
+        &none     &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT              &kp BSPC &kp DEL   &kp END  &kp PG_DN &kp ENTER &kp SPACE                     &kp UP &kp DOWN  &kp LBKT &kp RBKT &none
       >;
     };
     navigation_layer {
