@@ -130,7 +130,7 @@
   #define __8__ &tht F8  N8
   #define __9__ &tht F9  N9
 
-  #define __A__ &tht LSHFT A
+  #define __A__ &bht LSHFT A
   #define __B__ &tht LG(B) B
   #define __C__ &tht LG(C) C
   #define __D__ &kp D
@@ -144,7 +144,7 @@
   #define __L__ &kp L
   #define __M__ &kp M
   #define __N__ &kp N
-  #define __O__ &tht RSHFT O
+  #define __O__ &bht RSHFT O
   #define __P__ &kp P
   #define __Q__ &kp Q
   #define __R__ &tht LALT  R
