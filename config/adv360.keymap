@@ -15,33 +15,53 @@
 // * 'tapping-term-ms':
 //   - Increase value if triggers the hold action when you meant to tap
 //   - Decrease value if it feels too long for hold action to trigger
-//
+#define DEFAULT_TT 150
+
+// NOTES:
 // * 'quick-tap-ms':
 //   - Allows to repeart tap functionality of the 'hold-tap' key by holding it after
 //     the initial press.
 //   - Increase value if you can't get a key to repeat after press-hold action.
+#define DEFAULT_QT 200
 
 / {
     behaviors {
       #include "macros.dtsi"
 
-      hold_tap: hold_tap {
+      tht: tap_hold_tag {
           compatible = "zmk,behavior-hold-tap";
-          label = "hold_tap";
+          label = "tap_hold_tag";
           #binding-cells = <2>;
-          tapping-term-ms = <175>;
-          quick-tap-ms = <200>;
+          tapping-term-ms = <DEFAULT_TT>;
+          quick-tap-ms = <DEFAULT_QT>;
           flavor = "tap-preferred";
           bindings = <&kp>, <&kp>;
       };
-      // Momentary layer or key press. Essentially equivalent to the Layer-Tap, i.e. &lt
-      mo_kp: mo_kp {
+      bht: balanced_hold_tap {
           compatible = "zmk,behavior-hold-tap";
-          label = "mo_kp";
+          label = "balanced_hold_tap";
           #binding-cells = <2>;
-          tapping-term-ms = <175>;
-          quick-tap-ms = <200>;
+          tapping-term-ms = <DEFAULT_TT>;
+          quick-tap-ms = <DEFAULT_QT>;
+          flavor = "balanced";
+          bindings = <&kp>, <&kp>;
+      };
+      tlt: tap_layer_tap {
+          compatible = "zmk,behavior-hold-tap";
+          label = "tap_layer_tap";
+          #binding-cells = <2>;
+          tapping-term-ms = <DEFAULT_TT>;
+          quick-tap-ms = <DEFAULT_QT>;
           flavor = "tap-preferred";
+          bindings = <&mo>, <&kp>;
+      };
+      blt: balanced_layer_tap {
+          compatible = "zmk,behavior-hold-tap";
+          label = "BALANCED_LAYER_TAP";
+          #binding-cells = <2>;
+          tapping-term-ms = <DEFAULT_TT>;
+          quick-tap-ms = <DEFAULT_QT>;
+          flavor = "balanced";
           bindings = <&mo>, <&kp>;
       };
     };
@@ -96,23 +116,26 @@
       )
     };
 
-  #define __0__ &hold_tap F10 N0
-  #define __1__ &hold_tap F1  N1
-  #define __2__ &hold_tap F2  N2
-  #define __3__ &hold_tap F3  N3
-  #define __4__ &hold_tap F4  N4
-  #define __5__ &hold_tap F5  N5
-  #define __6__ &hold_tap F6  N6
-  #define __7__ &hold_tap F7  N7
-  #define __8__ &hold_tap F8  N8
-  #define __9__ &hold_tap F9  N9
+  #define __SYM_ESC__   &blt SYMBOLS ESC
+  #define __SYM_QUOTE__ &blt SYMBOLS SINGLE_QUOTE
 
-  #define __A__ &hold_tap LSHFT A
-  #define __B__ &hold_tap LG(B) B
-  #define __C__ &hold_tap LG(C) C
+  #define __0__ &tht F10 N0
+  #define __1__ &tht F1  N1
+  #define __2__ &tht F2  N2
+  #define __3__ &tht F3  N3
+  #define __4__ &tht F4  N4
+  #define __5__ &tht F5  N5
+  #define __6__ &tht F6  N6
+  #define __7__ &tht F7  N7
+  #define __8__ &tht F8  N8
+  #define __9__ &tht F9  N9
+
+  #define __A__ &tht LSHFT A
+  #define __B__ &tht LG(B) B
+  #define __C__ &tht LG(C) C
   #define __D__ &kp D
   #define __E__ &kp E
-  #define __F__ &hold_tap LG(F) F
+  #define __F__ &tht LG(F) F
   #define __G__ &kp G
   #define __H__ &kp H
   #define __I__ &kp I
@@ -121,29 +144,30 @@
   #define __L__ &kp L
   #define __M__ &kp M
   #define __N__ &kp N
-  #define __O__ &hold_tap RSHFT O
+  #define __O__ &tht RSHFT O
   #define __P__ &kp P
   #define __Q__ &kp Q
-  #define __R__ &hold_tap LALT  R
-  #define __S__ &hold_tap LGUI  S
-  #define __T__ &mo_kp NAVIGATION T
+  #define __R__ &tht LALT  R
+  #define __S__ &tht LGUI  S
+  #define __T__ &blt NAVIGATION T
   #define __U__ &kp U
-  #define __V__ &hold_tap LG(V) V
+  #define __V__ &tht LG(V) V
   #define __W__ &kp W
-  #define __X__ &hold_tap LG(X) X
+  #define __X__ &tht LG(X) X
   #define __Y__ &kp Y
   #define __Z__ &kp Z
+
 
   keymap {
     compatible = "zmk,keymap";
 
     default_layer {
       bindings = <
-        &kp F12         __1__     __2__    __3__    __4__     __5__ &none                                                                                 &mo SETTINGS __6__ __7__  __8__     __9__    __0__    &hold_tap F11 EQUAL
-        &kp TAB         __Q__     __W__    __F__    __P__     __G__ &none                                                                                 &none        __J__ __L__  __U__     __Y__    &kp SEMI &kp MINUS
-        &lt SYMBOLS ESC __A__     __R__    __S__    __T__     __D__ &none                          &kp LGUI  &kp LALT      &kp DELETE &kp RCTRL           &none        __H__ __N__  __E__     __I__    __O__    &lt SYMBOLS SINGLE_QUOTE
-        &none           __Z__     __X__    __C__    __V__     __B__                                          &tmux_zoom    &none                                       __K__ __M__  &kp COMMA &kp DOT  &kp FSLH &none
-        &none           &none     &none    &none    &none                 &hold_tap LCTRL BSPC &tmux_split_h &tmux_split_v &none      &kp ENTER &kp SPACE                    &none  &none     &none    &none    &none
+        &kp F12       __1__   __2__   __3__   __4__   __5__ &none                                                                            &mo SETTINGS __6__   __7__   __8__       __9__     __0__      &tht F11 EQUAL
+        &kp TAB       __Q__   __W__   __F__   __P__   __G__ &none                                                                            &none        __J__   __L__   __U__       __Y__     &kp SEMI   &kp MINUS
+        __SYM_ESC__   __A__   __R__   __S__   __T__   __D__ &none                     &kp LGUI  &kp LALT      &kp DELETE &kp RCTRL           &none        __H__   __N__   __E__       __I__     __O__      __SYM_QUOTE__
+        &none         __Z__   __X__   __C__   __V__   __B__                                     &tmux_zoom    &none                                       __K__   __M__   &kp COMMA   &kp DOT   &kp FSLH   &none
+        &none         &none   &none   &none   &none               &tht LCTRL BSPC &tmux_split_h &tmux_split_v &none      &kp ENTER &kp SPACE                      &none   &none       &none     &none      &none
       >;
     };
     mod {
